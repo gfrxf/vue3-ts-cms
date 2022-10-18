@@ -2,12 +2,12 @@ const path = require("path");
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   outputDir: "./build",
-  publicPath: './',
+  publicPath: "./",
   lintOnSave: false,
   configureWebpack: {
     resolve: {
       alias: {
-        views: "@/views",
+        components: "@/components",
       },
     },
   },

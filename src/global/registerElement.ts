@@ -8,6 +8,11 @@ import {
   ElAvatar,
   ElBacktop,
   ElBadge,
+  ElTabs,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElInput,
 } from "element-plus";
 
 const components = [
@@ -19,6 +24,11 @@ const components = [
   ElAvatar,
   ElBacktop,
   ElBadge,
+  ElTabs,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElInput,
 ];
 export default function (app: App): void {
   for (const cpn of components) {
