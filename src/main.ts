@@ -7,6 +7,7 @@ import "./service/axios-demo";
 import hyRquest from "./service/index";
 import "normalize.css";
 import "./assets/css/index.css";
+import {setupStore} from './store/index'
 // 全局引用
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
@@ -23,6 +24,7 @@ registerApp(app);
 // }
 app.use(router);
 app.use(store);
+setupStore()
 app.use(ElementPlus);
 app.mount("#app");
 

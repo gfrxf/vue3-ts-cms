@@ -1,8 +1,8 @@
 <template>
   <div class="login-pannel">
     <h1 class="title">后台管理系统</h1>
-    <el-tabs type="border-card" stretch class="demo-tabs">
-      <el-tab-pane class="">
+    <el-tabs type="border-card" stretch class="demo-tabs" v-model="currentTab">
+      <el-tab-pane class="" name="account">
         <template #label>
           <span class="custom-tabs-label">
             <!-- <el-icon><User /></el-icon> -->
@@ -13,7 +13,7 @@
         </template>
         <loginAccount ref="accountRef"></loginAccount>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span class="custom-tabs-label">
             <span class="txt2"
@@ -21,7 +21,7 @@
             >
           </span>
         </template>
-        <loginPhone></loginPhone>
+        <loginPhone ref="phoneRef"></loginPhone>
       </el-tab-pane>
     </el-tabs>
     <div class="account-control">
@@ -40,24 +40,39 @@ import loginPhone from "./loginPhone.vue";
 import { Calendar, User, Iphone } from "@element-plus/icons-vue";
 export default defineComponent({
   components: {
-   
     User,
     Iphone,
     loginAccount,
     loginPhone,
   },
   setup() {
-    const iskeepPassword = ref(false);
+    // 定义属性
+    const iskeepPassword = ref(true);
     const accountRef = ref<InstanceType<typeof loginAccount>>();
+      const phoneRef = ref<InstanceType<typeof loginPhone>>()
+      const currentTab = ref<string>('account')
+      // 定义方法
     const handelClick = () => {
-      console.log("立即登陆", accountRef.value);
-      accountRef.value?.loginAction();
+      if(currentTab.value === 'account'){
+        console.log("账号立即登陆", accountRef.value);
+      accountRef.value?.loginAction(iskeepPassword.value);
+      }
+      else{
+        console.log('phoneRef调用loginAction')
+        console.log( phoneRef.value);
+
+        phoneRef.value?.loginAction();
+
+      }
+
     };
 
     return {
       iskeepPassword,
       handelClick,
       accountRef,
+      currentTab,
+      phoneRef
     };
   },
 });

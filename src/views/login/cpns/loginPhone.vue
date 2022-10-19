@@ -1,6 +1,6 @@
 <template>
   <div class="login-account">
-    <el-form :rules="rules" label-width="60px" :model="phone">
+    <el-form :rules="rules" ref="formRef" label-width="60px" :model="phone">
       <el-form-item label="手机号" prop="number">
         <el-input v-model="phone.number"></el-input>
       </el-form-item>
@@ -15,9 +15,10 @@
 </template>
 <script lang="ts">
 import { trigger } from "@vue/reactivity";
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive,ref } from "vue";
 import { ElForm } from "element-plus";
 import rules from "../config/phone-config ";
+import {useStore} from 'vuex'
 export default defineComponent({
   setup() {
     const phone = reactive({
@@ -25,11 +26,29 @@ export default defineComponent({
       password: "",
     });
     // 编写规则
+    const store = useStore()
+    const formRef = ref<InstanceType<typeof ElForm>>();
+    const loginAction = (
+    ) => {
+        console.log('login');
 
+      formRef.value?.validate((valid:boolean) => {
+        console.log(valid);
+
+       if(valid){
+
+
+        console.log("手机开始登陆");
+        store.dispatch('login/phoneLoginAction',{...phone})
+       }
+      });
+    };
     return {
       phone,
       rules,
       ElForm,
+      loginAction,
+      formRef
     };
   },
 });

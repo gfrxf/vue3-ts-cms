@@ -60,11 +60,9 @@ class HYRequest {
         this.loading?.close();
 
         const data = res.data;
-        if (data.returnCode === "-1001") {
-          console.log("请求失败~, 错误信息");
-        } else {
+
           return data;
-        }
+        
       },
       (err) => {
         console.log("所有的实例都有的拦截器: 响应失败拦截");
