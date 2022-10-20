@@ -49,22 +49,19 @@ export default defineComponent({
     // 定义属性
     const iskeepPassword = ref(true);
     const accountRef = ref<InstanceType<typeof loginAccount>>();
-      const phoneRef = ref<InstanceType<typeof loginPhone>>()
-      const currentTab = ref<string>('account')
-      // 定义方法
+    const phoneRef = ref<InstanceType<typeof loginPhone>>();
+    const currentTab = ref<string>("account");
+    // 定义方法
     const handelClick = () => {
-      if(currentTab.value === 'account'){
+      if (currentTab.value === "account") {
         console.log("账号立即登陆", accountRef.value);
-      accountRef.value?.loginAction(iskeepPassword.value);
-      }
-      else{
-        console.log('phoneRef调用loginAction')
-        console.log( phoneRef.value);
+        accountRef.value?.loginAction(iskeepPassword.value);
+      } else {
+        console.log("phoneRef调用loginAction");
+        console.log(phoneRef.value);
 
         phoneRef.value?.loginAction();
-
       }
-
     };
 
     return {
@@ -72,7 +69,7 @@ export default defineComponent({
       handelClick,
       accountRef,
       currentTab,
-      phoneRef
+      phoneRef,
     };
   },
 });

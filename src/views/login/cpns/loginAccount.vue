@@ -15,35 +15,32 @@ import { trigger } from "@vue/reactivity";
 import { defineComponent, reactive, ref } from "vue";
 import { ElForm } from "element-plus";
 import rules from "../config/account-config";
-import localCache from '../../../utils/cache'
-import {useStore} from 'vuex'
+import localCache from "../../../utils/cache";
+import { useStore } from "vuex";
 export default defineComponent({
   setup() {
-    const store = useStore()
+    const store = useStore();
     const account = reactive({
-      name: localCache.getCache('name'),
-      password:localCache.getCache('password'),
+      name: localCache.getCache("name"),
+      password: localCache.getCache("password"),
     });
     const formRef = ref<InstanceType<typeof ElForm>>();
-    const loginAction = (iskeepPassword:boolean
-    ) => {
+    const loginAction = (iskeepPassword: boolean) => {
       console.log("真正开始登陆");
-      formRef.value?.validate((valid:boolean) => {
-       if(valid){
-        // 判断是否要记住密码
-        if(iskeepPassword){
-          // 进行本地缓存
-          localCache.setCache('name',account.name)
-          localCache.setCache('password',account.password)
-
+      formRef.value?.validate((valid: boolean) => {
+        if (valid) {
+          // 判断是否要记住密码
+          if (iskeepPassword) {
+            // 进行本地缓存
+            localCache.setCache("name", account.name);
+            localCache.setCache("password", account.password);
+          } else {
+            localCache.deleCache("name");
+            localCache.deleCache("password");
+          }
+          // 登陆验证
+          store.dispatch("login/accountLoginAction", { ...account });
         }
-        else{
-          localCache.deleCache('name')
-          localCache.deleCache('password')
-        }
-        // 登陆验证
-        store.dispatch('login/accountLoginAction',{...account})
-       }
       });
     };
 

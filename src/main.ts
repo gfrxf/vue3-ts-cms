@@ -7,24 +7,24 @@ import "./service/axios-demo";
 import hyRquest from "./service/index";
 import "normalize.css";
 import "./assets/css/index.css";
-import {setupStore} from './store/index'
+import { setupStore } from "./store/index";
 // 全局引用
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 
 import "element-plus/theme-chalk/index.css";
 import { tr } from "element-plus/es/locale";
-// import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 const app = createApp(RouteApp);
 
 registerApp(app);
-// for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-//   app.component(key, component)
-// }
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component);
+}
 app.use(router);
 app.use(store);
-setupStore()
+setupStore();
 app.use(ElementPlus);
 app.mount("#app");
 

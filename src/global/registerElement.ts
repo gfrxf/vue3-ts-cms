@@ -13,6 +13,9 @@ import {
   ElForm,
   ElFormItem,
   ElInput,
+  ElContainer,
+  ElHeader,
+  ElMain,
 } from "element-plus";
 
 const components = [
@@ -29,6 +32,9 @@ const components = [
   ElForm,
   ElFormItem,
   ElInput,
+  ElContainer,
+  ElHeader,
+  ElMain,
 ];
 export default function (app: App): void {
   for (const cpn of components) {

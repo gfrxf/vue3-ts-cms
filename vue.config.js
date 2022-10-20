@@ -4,16 +4,16 @@ module.exports = defineConfig({
   outputDir: "./build",
   // publicPath: "./",
   lintOnSave: false,
-  devServer:{
-    proxy:{
-      '^/api':{
-        target:'http://152.136.185.210:5000',
+  devServer: {
+    proxy: {
+      "^/api": {
+        target: "http://152.136.185.210:5000",
         pathRewrite: {
-          '^/api': ''
+          "^/api": "",
         },
-        changeOrigin: true
-      }
-    }
+        changeOrigin: true,
+      },
+    },
   },
   configureWebpack: {
     resolve: {

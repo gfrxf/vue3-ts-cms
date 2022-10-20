@@ -1,16 +1,16 @@
 import HYRequest from "./request";
 import { BASE_URL, TIME_OUT } from "./request/config";
-import localCache from '../utils/cache'
+import localCache from "../utils/cache";
 const hyRquest = new HYRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptor: (config) => {
-      const token = localCache.getCache('token')
+      const token = localCache.getCache("token");
       console.log(token);
 
-      if(token){
-        config.headers.Authorization = `Bearer ${token}`
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
       console.log("请求成功的拦截");
       return config;

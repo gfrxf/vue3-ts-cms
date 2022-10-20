@@ -61,8 +61,7 @@ class HYRequest {
 
         const data = res.data;
 
-          return data;
-        
+        return data;
       },
       (err) => {
         console.log("所有的实例都有的拦截器: 响应失败拦截");

@@ -15,10 +15,10 @@
 </template>
 <script lang="ts">
 import { trigger } from "@vue/reactivity";
-import { defineComponent, reactive,ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import { ElForm } from "element-plus";
 import rules from "../config/phone-config ";
-import {useStore} from 'vuex'
+import { useStore } from "vuex";
 export default defineComponent({
   setup() {
     const phone = reactive({
@@ -26,21 +26,18 @@ export default defineComponent({
       password: "",
     });
     // 编写规则
-    const store = useStore()
+    const store = useStore();
     const formRef = ref<InstanceType<typeof ElForm>>();
-    const loginAction = (
-    ) => {
-        console.log('login');
+    const loginAction = () => {
+      console.log("login");
 
-      formRef.value?.validate((valid:boolean) => {
+      formRef.value?.validate((valid: boolean) => {
         console.log(valid);
 
-       if(valid){
-
-
-        console.log("手机开始登陆");
-        store.dispatch('login/phoneLoginAction',{...phone})
-       }
+        if (valid) {
+          console.log("手机开始登陆");
+          store.dispatch("login/phoneLoginAction", { ...phone });
+        }
       });
     };
     return {
@@ -48,7 +45,7 @@ export default defineComponent({
       rules,
       ElForm,
       loginAction,
-      formRef
+      formRef,
     };
   },
 });
