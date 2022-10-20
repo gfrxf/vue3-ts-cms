@@ -4,6 +4,7 @@ import { IRootState } from "../type";
 import { IAccount } from "../../service/login/type";
 import localCache from "../../utils/cache";
 import router from "@/router";
+import {mapMenusToRoutes} from '../../utils/mapMenu'
 import {
   accountLoginRequest,
   requestUserInfoById,
@@ -28,6 +29,14 @@ const loginMoudle: Module<ILoginState, IRootState> = {
     },
     changeMenu(state, menus: any) {
       state.userMenus = menus;
+     const routes = mapMenusToRoutes(menus)
+    //  console.log(routes);
+    //  动态添加路由 将routes => router.main.chiidren
+    routes.forEach((route)=>{
+      router.addRoute('main',route)
+    })
+
+
     },
   },
   actions: {
