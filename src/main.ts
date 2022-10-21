@@ -22,9 +22,10 @@ registerApp(app);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
+setupStore();
 app.use(router);
 app.use(store);
-setupStore();
+
 app.use(ElementPlus);
 app.mount("#app");
 

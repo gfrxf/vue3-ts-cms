@@ -63,7 +63,7 @@ export default defineComponent({
     // const userMenus = store.state.login.userMenus
     const test = "1122";
     const handleMenuitemclick = (item:any) =>{
-      console.log(item);
+      
       router.push({
         path:item.url ?? '/notFind'
       })
