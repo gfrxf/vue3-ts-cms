@@ -1,5 +1,6 @@
 import menu from '@/router/main/system/menu/menu'
 import {RouteRecordRaw} from 'vue-router'
+import {IBreadcrumb} from '../base-ui/breadcrumb'
 let firstMenu:any = null
 export function  mapMenusToRoutes(userMenu:any[]):RouteRecordRaw[]{
 const routes:RouteRecordRaw[] = []
@@ -41,22 +42,65 @@ const recurseGetRoute = (menus:any[]) =>{
 recurseGetRoute(userMenu)
 return routes
 }
+// 匹配路由和面包屑函数相似，重构
+export function pathMapBreadcrumbs(userMenus: any[], currentPath: string){
+  const breadcrumbs: IBreadcrumb[] = []
+  pathMapTomenu(userMenus, currentPath, breadcrumbs)
+  return breadcrumbs
+}
+export function pathMapTomenu(userMenus:any[],currentPath:string,breadcrumbs?:IBreadcrumb[]):any{
+  for(const menu of userMenus){
+   if(menu.type ===1){
+    const findMenu = pathMapTomenu(menu.children ?? [],currentPath)
+    if(findMenu){
+      breadcrumbs?.push({ name: menu.name })
+      breadcrumbs?.push({ name: findMenu.name })
+      return findMenu
+    }
+
+   }
+    else if(menu.type === 2 && menu.url === currentPath){
+      return menu
+    }
+  }
+}
 // 匹配对应路由的函数
-export function pathMapTomenu (userMenus:any[],currentPath:string) {
-for(const menu of userMenus){
-  // console.log(menu);
-  // console.log(currentPath,'当前路径');
+// export function pathMapTomenu (userMenus:any[],currentPath:string) {
+// for(const menu of userMenus){
+//   // console.log(menu);
+//   // console.log(currentPath,'当前路径');
 
- if(menu.type ===1){
-  const findMenu = pathMapTomenu(menu.children ?? [],currentPath)
-  if(findMenu){
-    return findMenu
-  }
+//  if(menu.type ===1){
+//   const findMenu = pathMapTomenu(menu.children ?? [],currentPath)
+//   if(findMenu){
+//     return findMenu
+//   }
 
- }
-  else if(menu.type === 2 && menu.url === currentPath){
-    return menu
-  }
-}
-}
+//  }
+//   else if(menu.type === 2 && menu.url === currentPath){
+//     return menu
+//   }
+// }
+// }
+// // 匹配面包屑函数
+// export function pathMapBreakcrumbs(userMenus:any[],currentPath:string){
+//   const breadcrumbs:IBreadcrumb[] = []
+//   for(const menu of userMenus){
+//     // console.log(menu);
+//     // console.log(currentPath,'当前路径');
+
+//    if(menu.type ===1){
+//     const findMenu = pathMapTomenu(menu.children ?? [],currentPath)
+//     if(findMenu){
+//       breadcrumbs.push({name:menu.name,path:menu.url})
+//       breadcrumbs.push({name:findMenu.name,path:findMenu.url})
+//       return findMenu
+//     }
+
+//    }
+//     else if(menu.type === 2 && menu.url === currentPath){
+//       return menu
+//     }
+//   }
+// }
 export {firstMenu}

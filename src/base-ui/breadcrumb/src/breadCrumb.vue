@@ -7,6 +7,9 @@
       </el-breadcrumb-item>
      </template>
     </el-breadcrumb>
+    <!-- <div>
+      {{breadcrubs}}
+    </div> -->
   </div>
 </template>
 <script lang="ts">
@@ -19,7 +22,9 @@ export default defineComponent({
       default:() =>[]
     }
   },
-  setup() {
+  setup(props) {
+    console.log(props,'传过来的数据');
+
     return {};
   },
 });

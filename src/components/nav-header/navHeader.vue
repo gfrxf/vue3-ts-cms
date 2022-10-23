@@ -10,16 +10,21 @@
     </div>
 
     <div class="content">
-      <div><breadCrumb :breadcrunbs="breadcrunbs" ></breadCrumb></div>
+      <breadCrumb :breadcrubs="breadcrunbs"></breadCrumb>
       <userInfo></userInfo>
+
     </div>
+<!-- <div>{{breadcrunbs}}</div> -->
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref,computed } from "vue";
 import userInfo from './src/userInfo.vue'
 // import navBreadCrumb from './src/navBreadCrumb.vue'
-import breadCrumb ,{IBreadcrumb}from '../../base-ui/breadcrumb/index'
+import breadCrumb ,{IBreadcrumb}from '../../base-ui/breadcrumb'
+import {pathMapBreadcrumbs} from '../../utils/mapMenu'
+import {useStore} from '../../store'
+import {useRoute} from 'vue-router'
 export default defineComponent({
   emits: ["foldChange"],
   components:{
@@ -34,7 +39,18 @@ export default defineComponent({
     };
 
     // 面包屑的数据
-    const breadcrunbs:IBreadcrumb[] = []
+    const store = useStore()
+    const breadcrunbs = computed(()=>{
+      const userMenus = store.state.login.userMenus
+    const route = useRoute()
+    const currentPath = route.path
+    return pathMapBreadcrumbs(userMenus,currentPath)
+    })
+
+    // const breadcrunbs:IBreadcrumb[] = pathMapBreadcrumbs(userMenus,currentPath)
+    console.log(breadcrunbs,'面包屑');
+
+
     return {
       handelclick,
       isfold,

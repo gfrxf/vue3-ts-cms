@@ -10,18 +10,19 @@
             :rules="item.rules">
               <template v-if="item.type === 'input' || item.type === 'password' ">
                 <el-input
-                show-password="item.type === 'password'"
+                v-model="formData[`${item.field}`]"
+                :show-password="item.type === 'password'"
                 :placeholder="item.placeholder">
                 </el-input>
               </template>
               <template v-else-if="item.type === 'select'">
-              <el-select style="width:100%" :placeholder="item.placeholder">
+              <el-select  v-model="formData[`${item.field}`]" style="width:100%" :placeholder="item.placeholder">
                 <el-option v-for="option in item.options" :key="option.value" :value="option.value">
                 {{option.title}}</el-option>
               </el-select>
               </template>
               <template v-else-if=" item.type === 'datepicker'">
-                <el-date-picker style="width:100%" v-bind="item.otheroptions">
+                <el-date-picker style="width:100%"  v-model="formData[`${item.field}`]" v-bind="item.otheroptions">
                 </el-date-picker>
               </template>
             </el-form-item>
@@ -32,10 +33,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType ,ref,watch} from "vue";
 import { IFromItem ,IFrom} from "../type/index";
 export default defineComponent({
   props: {
+    modelValue:{
+      require:true,
+      type:Object
+    },
     formItems: {
       type: Array as PropType<IFromItem[]>,
       default: () => [],
@@ -60,8 +65,21 @@ export default defineComponent({
     },
 
   },
-  setup() {
-    return {};
+  emits:['update:modelValue'],
+  setup(props,{emit}) {
+    const formData =ref({...props.modelValue})
+    watch(
+      formData,(newValue)=>{
+        console.log(newValue);
+        emit('update:modelValue',newValue)
+
+      },{
+        deep:true
+      }
+    )
+    return {
+      formData
+    };
   },
 });
 </script>
