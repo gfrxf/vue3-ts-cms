@@ -1,7 +1,10 @@
+import menu from '@/router/main/system/menu/menu'
 import {RouteRecordRaw} from 'vue-router'
+let firstMenu:any = null
 export function  mapMenusToRoutes(userMenu:any[]):RouteRecordRaw[]{
 const routes:RouteRecordRaw[] = []
 const allRoutes:RouteRecordRaw[] = []
+
 //1、先去加载默认所有的routes
 
 const routeFiles = require.context('../router/main',true,/\.ts/)
@@ -27,6 +30,9 @@ const recurseGetRoute = (menus:any[]) =>{
     if(menu.type === 2){
       const route = allRoutes.find((route)=> route.path === menu.url)
       if(route) routes.push(route)
+      if(!firstMenu){
+        firstMenu = menu
+      }
     }else{
       recurseGetRoute(menu.children)
     }
@@ -35,3 +41,22 @@ const recurseGetRoute = (menus:any[]) =>{
 recurseGetRoute(userMenu)
 return routes
 }
+// 匹配对应路由的函数
+export function pathMapTomenu (userMenus:any[],currentPath:string) {
+for(const menu of userMenus){
+  // console.log(menu);
+  // console.log(currentPath,'当前路径');
+
+ if(menu.type ===1){
+  const findMenu = pathMapTomenu(menu.children ?? [],currentPath)
+  if(findMenu){
+    return findMenu
+  }
+
+ }
+  else if(menu.type === 2 && menu.url === currentPath){
+    return menu
+  }
+}
+}
+export {firstMenu}

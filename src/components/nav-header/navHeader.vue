@@ -10,7 +10,7 @@
     </div>
 
     <div class="content">
-      <div>面包屑</div>
+      <div><breadCrumb :breadcrunbs="breadcrunbs" ></breadCrumb></div>
       <userInfo></userInfo>
     </div>
   </div>
@@ -18,10 +18,13 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import userInfo from './src/userInfo.vue'
+// import navBreadCrumb from './src/navBreadCrumb.vue'
+import breadCrumb ,{IBreadcrumb}from '../../base-ui/breadcrumb/index'
 export default defineComponent({
   emits: ["foldChange"],
   components:{
-    userInfo
+    userInfo,
+    breadCrumb
   },
   setup(props, { emit }) {
     const isfold = ref(false);
@@ -29,9 +32,13 @@ export default defineComponent({
       isfold.value = !isfold.value;
       emit("foldChange", isfold.value);
     };
+
+    // 面包屑的数据
+    const breadcrunbs:IBreadcrumb[] = []
     return {
       handelclick,
       isfold,
+      breadcrunbs
     };
   },
 });

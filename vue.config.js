@@ -21,6 +21,8 @@ module.exports = defineConfig({
     resolve: {
       alias: {
         components: "@/components",
+        '@':path.resolve(__dirname,'./src')
+
       },
     },
   },
@@ -31,9 +33,9 @@ module.exports = defineConfig({
   //     views: '@/views'
   //   }
   // },
-  chainWebpack: (config) => {
-    config.resolve.alias
-      .set("@", path.resolve(__dirname, "src"))
-      .set("views", "@/views");
-  },
+  // chainWebpack: (config) => {
+  //   config.resolve.alias
+  //     .set("@", path.resolve(__dirname, "src"))
+  //     .set("views", "@/views");
+  // },
 });
