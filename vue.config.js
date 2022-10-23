@@ -17,22 +17,22 @@ module.exports = defineConfig({
     },
 
   },
-  configureWebpack: {
-    resolve: {
-      alias: {
-        components: "@/components",
-        '@':path.resolve(__dirname,'./src')
+  // configureWebpack: {
+  //   resolve: {
+  //     alias: {
+  //       components: "@/components",
+  //       '@':path.resolve(__dirname,'./src')
 
-      },
-    },
-  },
-
-  // configureWebpack: (config) => {
-  //   config.resolve.alias = {
-  //     '@': path.resolve(__dirname, 'src'),
-  //     views: '@/views'
-  //   }
+  //     },
+  //   },
   // },
+
+  configureWebpack: (config) => {
+    config.resolve.alias = {
+      '@': path.resolve(__dirname, 'src'),
+      views: '@/views'
+    }
+  },
   // chainWebpack: (config) => {
   //   config.resolve.alias
   //     .set("@", path.resolve(__dirname, "src"))

@@ -48,7 +48,7 @@ export default defineComponent({
     })
 
     // const breadcrunbs:IBreadcrumb[] = pathMapBreadcrumbs(userMenus,currentPath)
-    console.log(breadcrunbs,'面包屑');
+    // console.log(breadcrunbs,'面包屑');
 
 
     return {

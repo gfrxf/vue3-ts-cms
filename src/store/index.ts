@@ -1,5 +1,6 @@
 import { createStore, Store, useStore as usevuexStore } from "vuex";
 import login from "./login/login";
+import system from './main/system/system'
 import { IStoreType } from "./type";
 const store = createStore({
   state() {
@@ -13,6 +14,7 @@ const store = createStore({
   actions: {},
   modules: {
     login,
+    system
   },
 });
 export function setupStore() {

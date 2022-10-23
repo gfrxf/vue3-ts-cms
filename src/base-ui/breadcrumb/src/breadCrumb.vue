@@ -23,7 +23,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    console.log(props,'传过来的数据');
+    // console.log(props,'传过来的数据');
 
     return {};
   },
