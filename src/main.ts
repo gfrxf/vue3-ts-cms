@@ -15,7 +15,6 @@ import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/index.css";
 import { tr } from "element-plus/es/locale";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-
 const app = createApp(RouteApp);
 
 registerApp(app);
@@ -27,10 +26,11 @@ app.use(router);
 app.use(store);
 
 app.use(ElementPlus);
+
 app.mount("#app");
 
-console.log(process.env.VUE_APP_BASE_URL);
-console.log(process.env.VUE_APP_BASE_NAME);
+// console.log(process.env.VUE_APP_BASE_URL);
+// console.log(process.env.VUE_APP_BASE_NAME);
 // hyRquest.request({
 //   url:'/home/multidate',
 //   method:'GET',

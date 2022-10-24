@@ -13,7 +13,6 @@
             <div class="page-info">
               <router-view></router-view>
             </div>
-
           </el-main>
         </el-container>
       </el-container>
@@ -59,7 +58,7 @@ export default defineComponent({
 
 .page-content {
   height: calc(100% - 48px);
-  .page-info{
+  .page-info {
     background-color: #fff;
     border-radius: 5px;
   }

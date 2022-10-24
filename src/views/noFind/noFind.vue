@@ -1,19 +1,15 @@
 <template>
-    <div>
-      <h2>404没有找到页面</h2>
-    </div>
+  <div>
+    <h2>404没有找到页面</h2>
+  </div>
 </template>
-<script  lang='ts'>
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent } from "vue";
 export default defineComponent({
- setup() {
- return {}
- }
-})
+  setup() {
+    return {};
+  },
+});
 </script>
 
-
-
-<style lang='less' scoped>
-
-</style>
+<style lang="less" scoped></style>

@@ -13,9 +13,7 @@ module.exports = defineConfig({
         },
         changeOrigin: true,
       },
-
     },
-
   },
   // configureWebpack: {
   //   resolve: {
@@ -29,9 +27,9 @@ module.exports = defineConfig({
 
   configureWebpack: (config) => {
     config.resolve.alias = {
-      '@': path.resolve(__dirname, 'src'),
-      views: '@/views'
-    }
+      "@": path.resolve(__dirname, "src"),
+      views: "@/views",
+    };
   },
   // chainWebpack: (config) => {
   //   config.resolve.alias

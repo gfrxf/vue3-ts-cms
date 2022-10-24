@@ -23,7 +23,10 @@
             </template>
             <!-- 遍历里面的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item @click="handleMenuitemclick(subitem)" :index="subitem.id + ''">
+              <el-menu-item
+                @click="handleMenuitemclick(subitem)"
+                :index="subitem.id + ''"
+              >
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
@@ -45,11 +48,11 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed,ref } from "vue";
+import { defineComponent, computed, ref } from "vue";
 // import {useStore} from 'vuex'
 import { useStore } from "../../../store/index";
-import {useRouter,useRoute} from 'vue-router'
-import { pathMapTomenu} from '../../../utils/mapMenu'
+import { useRouter, useRoute } from "vue-router";
+import { pathMapTomenu } from "../../../utils/mapMenu";
 export default defineComponent({
   props: {
     collapse: {
@@ -62,30 +65,29 @@ export default defineComponent({
     const store = useStore();
     const userMenus = computed(() => store.state.login.userMenus);
     // 路由
-    const router = useRouter()
+    const router = useRouter();
     // useRoute 当前的路由对象
-    const route = useRoute()
-    const currentPath = route.path
+    const route = useRoute();
+    const currentPath = route.path;
     // console.log(currentPath,'当前路径');
 
-    const menu = pathMapTomenu(userMenus.value,currentPath)
+    const menu = pathMapTomenu(userMenus.value, currentPath);
     // console.log(menu,'234');
 
     // const userMenus = store.state.login.userMenus
-    const defaultValue =  ref(menu.id + '')
+    const defaultValue = ref(menu.id + "");
     const test = "1122";
-    const handleMenuitemclick = (item:any) =>{
-
+    const handleMenuitemclick = (item: any) => {
       router.push({
-        path:item.url ?? '/notFind'
-      })
-    }
+        path: item.url ?? "/notFind",
+      });
+    };
 
     return {
       userMenus,
       test,
       handleMenuitemclick,
-      defaultValue
+      defaultValue,
     };
   },
 });

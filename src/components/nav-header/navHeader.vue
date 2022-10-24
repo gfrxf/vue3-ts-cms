@@ -12,24 +12,23 @@
     <div class="content">
       <breadCrumb :breadcrubs="breadcrunbs"></breadCrumb>
       <userInfo></userInfo>
-
     </div>
-<!-- <div>{{breadcrunbs}}</div> -->
+    <!-- <div>{{breadcrunbs}}</div> -->
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref,computed } from "vue";
-import userInfo from './src/userInfo.vue'
+import { defineComponent, ref, computed } from "vue";
+import userInfo from "./src/userInfo.vue";
 // import navBreadCrumb from './src/navBreadCrumb.vue'
-import breadCrumb ,{IBreadcrumb}from '../../base-ui/breadcrumb'
-import {pathMapBreadcrumbs} from '../../utils/mapMenu'
-import {useStore} from '../../store'
-import {useRoute} from 'vue-router'
+import breadCrumb, { IBreadcrumb } from "../../base-ui/breadcrumb";
+import { pathMapBreadcrumbs } from "../../utils/mapMenu";
+import { useStore } from "../../store";
+import { useRoute } from "vue-router";
 export default defineComponent({
   emits: ["foldChange"],
-  components:{
+  components: {
     userInfo,
-    breadCrumb
+    breadCrumb,
   },
   setup(props, { emit }) {
     const isfold = ref(false);
@@ -39,22 +38,21 @@ export default defineComponent({
     };
 
     // 面包屑的数据
-    const store = useStore()
-    const breadcrunbs = computed(()=>{
-      const userMenus = store.state.login.userMenus
-    const route = useRoute()
-    const currentPath = route.path
-    return pathMapBreadcrumbs(userMenus,currentPath)
-    })
+    const store = useStore();
+    const breadcrunbs = computed(() => {
+      const userMenus = store.state.login.userMenus;
+      const route = useRoute();
+      const currentPath = route.path;
+      return pathMapBreadcrumbs(userMenus, currentPath);
+    });
 
     // const breadcrunbs:IBreadcrumb[] = pathMapBreadcrumbs(userMenus,currentPath)
     // console.log(breadcrunbs,'面包屑');
 
-
     return {
       handelclick,
       isfold,
-      breadcrunbs
+      breadcrunbs,
     };
   },
 });
@@ -73,8 +71,6 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     align-items: center;
-
   }
-
 }
 </style>

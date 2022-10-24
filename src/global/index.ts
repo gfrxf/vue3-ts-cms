@@ -1,6 +1,7 @@
 import { App } from "vue";
-
+import { registerProperties } from "./registerPropoties";
 import registerElement from "./registerElement";
 export function registerApp(app: App): void {
-  registerElement(app);
+  // app.use(registerElement)
+  app.use(registerProperties);
 }
