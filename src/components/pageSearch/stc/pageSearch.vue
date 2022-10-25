@@ -7,8 +7,12 @@
         </template>
         <template #footer>
           <div class="btmbox">
-            <el-button type="primary" @click="handleResetClick" icon="refresh">重置</el-button>
-            <el-button type="primary" icon="search">搜索</el-button>
+            <el-button type="primary" @click="handleResetClick" icon="refresh"
+              >重置</el-button
+            >
+            <el-button type="primary" @click="handleQueryClick" icon="search"
+              >搜索</el-button
+            >
           </div>
         </template>
       </Hyform>
@@ -29,24 +33,30 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const formItems = props.searchFormConfig?.formItems ??[]
-    const formOriginData:any ={}
-    for(const item of formItems){
-      formOriginData[item.field] = ''
+  emits: ["resetBtnClick", "queryBtnClick"],
+  setup(props, { emit }) {
+    const formItems = props.searchFormConfig?.formItems ?? [];
+    const formOriginData: any = {};
+    for (const item of formItems) {
+      formOriginData[item.field] = "";
     }
     const formData = ref(formOriginData);
     // 优化当用户点击重置时
-    const handleResetClick = () =>{
+    const handleResetClick = () => {
       // formData.value = formOriginData
       // for(const key in formOriginData){
       //   formData.value[`${key}`] = formOriginData[key]
       // }
-      formData.value = formOriginData
-    }
+      formData.value = formOriginData;
+      emit("resetBtnClick");
+    };
+    const handleQueryClick = () => {
+      emit("queryBtnClick", formData.value);
+    };
     return {
       formData,
-      handleResetClick
+      handleResetClick,
+      handleQueryClick,
     };
   },
 });

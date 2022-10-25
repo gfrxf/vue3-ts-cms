@@ -1,7 +1,12 @@
 <template>
   <div class="user">
-    <pageSearch :searchFormConfig="searchFormConfig"></pageSearch>
+    <pageSearch
+      :searchFormConfig="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
+    ></pageSearch>
     <pageContent
+      ref="pageContentRef"
       pageName="users"
       :contentTableConfig="contentTableConfig"
     ></pageContent>
@@ -15,14 +20,20 @@ import pageSearch from "../../../../components/pageSearch/index";
 import { searchFormConfig } from "./config/search.config";
 import { contentTableConfig } from "./config/content.config";
 import Hytable from "@/base-ui/table";
+import { usePageSearch } from "@/hooks/usePageSearch";
 import pageContent from "@/components/pageContent";
 export default defineComponent({
   name: "user",
   components: { pageSearch, Hytable, pageContent },
   setup() {
+    const [pageContentRef, handleResetClick, handleQueryClick] =
+      usePageSearch();
     return {
       searchFormConfig,
       contentTableConfig,
+      pageContentRef,
+      handleResetClick,
+      handleQueryClick,
     };
   },
 });

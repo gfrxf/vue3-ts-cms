@@ -16,7 +16,7 @@
                 v-if="item.type === 'input' || item.type === 'password'"
               >
                 <el-input
-                :model-value="modelValue[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
                   @update:modelValue="handleValueChange($event, item.field)"
                   :show-password="item.type === 'password'"
                   :placeholder="item.placeholder"
@@ -25,7 +25,7 @@
               </template>
               <template v-else-if="item.type === 'select'">
                 <el-select
-                :model-value="modelValue[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
                   @update:modelValue="handleValueChange($event, item.field)"
                   style="width: 100%"
                   :placeholder="item.placeholder"
@@ -59,7 +59,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, ref, watch,computed } from "vue";
+import { defineComponent, PropType, ref, watch, computed } from "vue";
 import { IFromItem, IFrom } from "../type/index";
 export default defineComponent({
   props: {
@@ -103,12 +103,12 @@ export default defineComponent({
     //     deep: true,
     //   }
     // );
-    const handleValueChange = (value:any,field:string) =>{
-      emit('update:modelValue',{ ...props.modelValue, [field]: value })
-    }
+    const handleValueChange = (value: any, field: string) => {
+      emit("update:modelValue", { ...props.modelValue, [field]: value });
+    };
     return {
       // formData,
-      handleValueChange
+      handleValueChange,
     };
   },
 });
