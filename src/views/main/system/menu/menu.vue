@@ -12,7 +12,7 @@ import { defineComponent } from "vue";
 import pageContent from "@/components/pageContent";
 import { contentTableConfig } from "./config/content.config";
 export default defineComponent({
-  name: "menu",
+  name: "hy-menu",
   components: {
     pageContent,
   },

@@ -8,11 +8,11 @@
     >
       <!-- header中的插槽 -->
       <template #headerHandler>
-        <el-button type="primary" size="medium">新建用户</el-button>
+        <el-button v-if="isCreate" type="primary" >新建用户</el-button>
       </template>
       <!-- 2.列中的插槽 -->
       <template #status="scope">
-        <el-button size="mini" :type="scope.row.enable ? 'success' : 'danger'">
+        <el-button size="small" :type="scope.row.enable ? 'success' : 'danger'">
           {{ scope.row.enable ? "启用" : "禁用" }}
         </el-button>
       </template>
@@ -29,10 +29,10 @@
 
       <template #handler>
         <div class="handle-btns">
-          <el-button size="small" type="text"
-            ><el-icon size="20"><EditPen /></el-icon>编辑</el-button
+          <el-button size="small" type="primary"
+            ><el-icon v-if="isUpdate" size="20"><EditPen /></el-icon>编辑</el-button
           >
-          <el-button size="mini" type="text"
+          <el-button  v-if="isDelete" size="small" type="primary"
             ><el-icon size="20"><Delete /></el-icon>删除</el-button
           >
         </div>
@@ -52,6 +52,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, ref, watch } from "vue";
+import {usePermission} from '@/hooks/usePermission'
 import Hytable from "@/base-ui/table";
 import { useStore } from "@/store";
 export default defineComponent({
@@ -70,7 +71,11 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore();
-
+     // 0.获取操作的权限
+    const isCreate = usePermission(props.pageName, 'create')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isQuery = usePermission(props.pageName, 'query')
     // const userCount = computed(() => store.state.system.userCount);
     // console.log(dataList,'role');
     // 1.双向绑定pageInfo
@@ -78,6 +83,7 @@ export default defineComponent({
     watch(pageInfo, () => getPageData());
     // 2.发送网络请求
     const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return
       store.dispatch("system/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
@@ -111,6 +117,9 @@ export default defineComponent({
       dataCount,
       pageInfo,
       otherPropSlots,
+      isCreate,
+      isUpdate,
+      isDelete
     };
   },
 });

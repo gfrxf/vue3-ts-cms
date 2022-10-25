@@ -4,7 +4,7 @@ import { IRootState } from "../type";
 import { IAccount } from "../../service/login/type";
 import localCache from "../../utils/cache";
 import router from "@/router";
-import { mapMenusToRoutes } from "../../utils/mapMenu";
+import { mapMenusToRoutes,mapMenusToPermissions } from "../../utils/mapMenu";
 import {
   accountLoginRequest,
   requestUserInfoById,
@@ -17,6 +17,7 @@ const loginMoudle: Module<ILoginState, IRootState> = {
       token: "",
       userInfo: {},
       userMenus: [],
+      permissions: []
     };
   },
   getters: {},
@@ -29,12 +30,19 @@ const loginMoudle: Module<ILoginState, IRootState> = {
     },
     changeMenu(state, menus: any) {
       state.userMenus = menus;
+      console.log('注册动态路由')
       const routes = mapMenusToRoutes(menus);
       //  console.log(routes);
       //  动态添加路由 将routes => router.main.chiidren
       routes.forEach((route) => {
         router.addRoute("main", route);
       });
+       // 获取用户按钮的权限
+       const permissions = mapMenusToPermissions(menus)
+       state.permissions = permissions
+       console.log(permissions);
+
+
     },
   },
   actions: {
