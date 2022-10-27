@@ -8,7 +8,9 @@
     >
       <!-- header中的插槽 -->
       <template #headerHandler>
-        <el-button v-if="isCreate" type="primary" >新建用户</el-button>
+        <el-button v-if="isCreate" type="primary" @click="handleNewClick"
+          >新建用户</el-button
+        >
       </template>
       <!-- 2.列中的插槽 -->
       <template #status="scope">
@@ -27,12 +29,20 @@
         </strong>
       </template>
 
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
-          <el-button size="small" type="primary"
-            ><el-icon v-if="isUpdate" size="20"><EditPen /></el-icon>编辑</el-button
+          <el-button
+            size="small"
+            type="primary"
+            @click="handleEditClick(scope.row)"
+            ><el-icon v-if="isUpdate" size="20"><EditPen /></el-icon
+            >编辑</el-button
           >
-          <el-button  v-if="isDelete" size="small" type="primary"
+          <el-button
+            v-if="isDelete"
+            size="small"
+            @click="handleDeleteClick(scope.row)"
+            type="primary"
             ><el-icon size="20"><Delete /></el-icon>删除</el-button
           >
         </div>
@@ -52,7 +62,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, ref, watch } from "vue";
-import {usePermission} from '@/hooks/usePermission'
+import { usePermission } from "@/hooks/usePermission";
 import Hytable from "@/base-ui/table";
 import { useStore } from "@/store";
 export default defineComponent({
@@ -69,25 +79,26 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  emits: ["newBtnClick", "editBtnClick"],
+  setup(props, { emit }) {
     const store = useStore();
-     // 0.获取操作的权限
-    const isCreate = usePermission(props.pageName, 'create')
-    const isUpdate = usePermission(props.pageName, 'update')
-    const isDelete = usePermission(props.pageName, 'delete')
-    const isQuery = usePermission(props.pageName, 'query')
+    // 0.获取操作的权限
+    const isCreate = usePermission(props.pageName, "create");
+    const isUpdate = usePermission(props.pageName, "update");
+    const isDelete = usePermission(props.pageName, "delete");
+    const isQuery = usePermission(props.pageName, "query");
     // const userCount = computed(() => store.state.system.userCount);
     // console.log(dataList,'role');
     // 1.双向绑定pageInfo
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 });
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 });
     watch(pageInfo, () => getPageData());
     // 2.发送网络请求
     const getPageData = (queryInfo: any = {}) => {
-      if (!isQuery) return
+      if (!isQuery) return;
       store.dispatch("system/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo,
         },
@@ -111,6 +122,22 @@ export default defineComponent({
         return true;
       }
     );
+    // 5.删除/编辑/新建操作
+    const handleDeleteClick = (item: any) => {
+      console.log(item);
+      store.dispatch("system/deletePageDataAction", {
+        pageName: props.pageName,
+        id: item.id,
+      });
+    };
+    const handleNewClick = () => {
+      emit("newBtnClick");
+      console.log("新建");
+    };
+    const handleEditClick = (item: any) => {
+      console.log(item);
+      emit("editBtnClick", item);
+    };
     return {
       dataList,
       getPageData,
@@ -119,7 +146,10 @@ export default defineComponent({
       otherPropSlots,
       isCreate,
       isUpdate,
-      isDelete
+      isDelete,
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick,
     };
   },
 });

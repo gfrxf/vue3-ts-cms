@@ -9,6 +9,7 @@ export interface IFromItem {
   options?: any[];
   // 针对的特殊属性
   otheroptions?: any;
+  isHidden?: boolean;
 }
 export interface IFrom {
   formItems: IFromItem[];

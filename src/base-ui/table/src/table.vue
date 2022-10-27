@@ -8,8 +8,11 @@
         </div>
       </slot>
     </div>
-    <el-table :data="listData" border style="width: 100%"
-    v-bind="childrenProps"
+    <el-table
+      :data="listData"
+      border
+      style="width: 100%"
+      v-bind="childrenProps"
     >
       <el-table-column
         v-if="showIndexColumn"
@@ -77,12 +80,12 @@ export default defineComponent({
     },
     childrenProps: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     showFooter: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   setup(props, { emit }) {
     // console.log(props.listData, "table");

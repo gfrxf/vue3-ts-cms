@@ -11,6 +11,7 @@
               :style="itemStyle"
               :label="item.label"
               :rules="item.rules"
+              v-if="!item.isHidden"
             >
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
@@ -61,6 +62,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from "vue";
 import { IFromItem, IFrom } from "../type/index";
+
 export default defineComponent({
   props: {
     modelValue: {
