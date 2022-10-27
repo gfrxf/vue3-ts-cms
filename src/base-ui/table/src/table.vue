@@ -27,6 +27,7 @@
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
+              <!-- {{scope.row}} -->
             </slot>
           </template>
         </el-table-column>

@@ -10,6 +10,7 @@
       >
         <!-- <Hytable v-bind="modalConfig" v-model="formData"></Hytable> -->
         <Hyform v-bind="modalConfig" v-model="formData"></Hyform>
+        <slot></slot>
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="centerDialogVisible = false">取消</el-button>
@@ -36,6 +37,10 @@ export default defineComponent({
       type: Object,
       default: () => ({}),
     },
+    otherInfo: {
+      type: Object,
+      default: () => ({})
+    },
     pageName: {
       type: String,
       require: true,
@@ -55,7 +60,7 @@ export default defineComponent({
         console.log("编辑用户");
         store.dispatch("system/editPageDataAction", {
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id,
         });
       } else {
@@ -63,7 +68,7 @@ export default defineComponent({
         console.log("新建用户");
         store.dispatch("system/createPageDataActio", {
           pageName: props.pageName,
-          newData: { ...formData.value },
+          newData: { ...formData.value, ...props.otherInfo },
         });
       }
     };

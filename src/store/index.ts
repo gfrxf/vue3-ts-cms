@@ -10,6 +10,7 @@ const store = createStore({
       age: 18,
       entireDepartment: [],
       entireRole: [],
+      entireMenu: []
     };
   },
   mutations: {
@@ -19,6 +20,11 @@ const store = createStore({
     changeEntireRole(state, list) {
       state.entireRole = list;
     },
+    changeEntireMenu(state, list) {
+     state.entireMenu = list
+      // console.log(state.entireMenu,'vuex');
+
+    }
   },
   getters: {},
   actions: {
@@ -34,9 +40,16 @@ const store = createStore({
         size: 1000,
       });
       const { list: roleList } = roleResult.data;
+      const menuResult = await getPageListData("/menu/list",{
+      })
+      // console.log(menuResult.data);
+
+      const {list:menuList} = menuResult.data
       // 2.保存数据
       commit("changeEntireDepartment", departmentList);
       commit("changeEntireRole", roleList);
+      commit("changeEntireMenu",menuList)
+      // commit('changeEntireMenu', menuList)
     },
   },
   modules: {
@@ -46,7 +59,7 @@ const store = createStore({
 });
 export function setupStore() {
   store.dispatch("login/loadLocalLogin");
-  store.dispatch("getInitialDataAction");
+  // store.dispatch("getInitialDataAction");
 }
 export function useStore(): Store<IStoreType> {
   return usevuexStore();
