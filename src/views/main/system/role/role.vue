@@ -31,14 +31,16 @@
 
 <script lang="ts">
 import { useStore } from "@/store";
-import { defineComponent,computed ,ref} from "vue";
+import { defineComponent,computed ,ref,nextTick} from "vue";
 import pageContent from "@/components/pageContent";
 import { searchFormConfig } from "./config/search.config";
 import pageSearch from "@/components/pageSearch";
+import { ElTree } from 'element-plus'
 import pageModal from "@/components/pageModal";
 import {usePageModal} from '@/hooks/usePageModal'
 import {modalConfig} from './config/modal.config'
 import { contentTableConfig } from "./config/content.config";
+import {menuMapLeafKeys} from '@/utils/mapMenu'
 
 // import {useStore} from 'vuex'
 export default defineComponent({
@@ -49,8 +51,22 @@ export default defineComponent({
     pageModal
   },
   setup() {
-    const [pageModalRef, defaultInfo, handelNewData, handelEditData] =usePageModal();
-    const store = useStore();
+      // 1.处理pageModal的hook
+    const elTreeRef = ref<InstanceType<typeof ElTree>>()
+    const editCallback =(item:any) =>{
+      // console.log(item);
+
+    const leafKeys =  menuMapLeafKeys(item.menuList)
+    // console.log(leafKeys,'leafkeys');
+    nextTick(() => {
+        console.log(elTreeRef.value)
+        elTreeRef.value?.setCheckedKeys(leafKeys, false)
+      })
+
+
+    }
+    const [pageModalRef, defaultInfo, handelNewData, handelEditData] =usePageModal(undefined,  editCallback)
+    const store = useStore()
 
     const otherInfo = ref({})
 
@@ -79,7 +95,8 @@ export default defineComponent({
        handelEditData,
        menus,
        otherInfo,
-       handleCheckChange
+       handleCheckChange,
+       elTreeRef
 
     };
   },
