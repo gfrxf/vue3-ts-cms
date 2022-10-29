@@ -4,23 +4,43 @@
     </div>
 </template>
 <script setup lang='ts'>
+import {computed} from 'vue'
 import baseEchart from '@/base-ui/echart';
-
-const options ={
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+import { IDataType } from '../types/index';
+const props = defineProps<{
+pieData:IDataType
+}>()
+const options = computed(() =>{
+  return {
+  title: {
+    text: '分类数据',
+    // subtext: 'Fake Data',
+    left: 'center'
   },
-  yAxis: {
-    type: 'value'
+  tooltip: {
+    trigger: 'item'
+  },
+  legend: {
+    orient: 'vertical',
+    left: 'left'
   },
   series: [
     {
-      data: [120, 200, 150, 80, 70, 110, 130],
-      type: 'bar'
+      name: '分类数据',
+      type: 'pie',
+      radius: '50%',
+      data: props.pieData,
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+      }
     }
   ]
 }
+})
 </script>
 
 
